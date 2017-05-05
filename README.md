@@ -2,12 +2,12 @@
 
 Teoria dos Grafos - UTFPR - CM - (2017-1)
 
-[![Build Status](https://travis-ci.org/xaaaaaandao/GrafosEmC.svg?branch=master)](https://travis-ci.org/xaaaaaandao/GrafosEmC)
+[![Build Status](https://travis-ci.org/xaaaaaandao/PAGRM-Grafos.svg?branch=master)](https://travis-ci.org/xaaaaaandao/GrafosEmC)
 
 ### Execução
 
 ```
-$ git clone https://github.com/xaaaaaandao/GrafosEmC.git
+$ git clone https://github.com/xaaaaaandao/PAGRM-Grafos.git
 
 $ make all
 ```
