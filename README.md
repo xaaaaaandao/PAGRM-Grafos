@@ -2,7 +2,7 @@
 
 Teoria dos Grafos - UTFPR - CM - (2017-1)
 
-[![Build Status](https://travis-ci.org/xaaaaaandao/PAGRM-Grafos.svg?branch=master)](https://travis-ci.org/xaaaaaandao/PAGRM-Grafos)
+[![Build Status](https://travis-ci.org/xaaaandao/PAGRM-Grafos.svg?branch=master)](https://travis-ci.org/xaaaandao/PAGRM-Grafos)
 
 ### Execução
 
