@@ -11,9 +11,8 @@ int preencheMatriz(int **matriz, char *linha){
 		if(linha[i] == ' '){
 			peso[j] = '\0';
 			valorPeso = atoi(peso);
-			printf("%d\n", numeroLinha);
 			matriz[numeroLinha][k] = valorPeso;
-//			printf("%d ", valorPeso);
+			matriz[k][numeroLinha] = valorPeso;
 			memset(peso, 0, sizeof(peso));
 			j = 0;
 			k++;
@@ -76,13 +75,14 @@ void lendoArquivo(char *name){
 	while(fgets(linha, sizeof(linha), entrada) != NULL){
 		if(i == 0){
 			nVertice = numeroVertice(linha);
+			nRotulo = numeroRotulo(linha);
 			break;	
 		}
 	}
 
 	int **matrizAdjacencia = (int**) malloc (nVertice * sizeof(int*));
 	for(j = 0; j < nVertice; j++){
-		matrizAdjacencia[i] = (int*) malloc (nVertice * sizeof(int)); //Aloca um Vetor de Inteiros para cada posição do Vetor de Ponteiros.
+		matrizAdjacencia[j] = (int*) malloc (nVertice * sizeof(int)); //Aloca um Vetor de Inteiros para cada posição do Vetor de Ponteiros.
  	}
 
  	for(j = 0; j < nVertice; j++){
@@ -93,23 +93,29 @@ void lendoArquivo(char *name){
 
 	numeroLinha = nVertice - 1;
 
+	i = 0;
 	while(fgets(linha, sizeof(linha), entrada) != NULL){
-		if(i == 0){
-			nRotulo = numeroRotulo(linha);
-		} else {
+		if(i >= 0){
 			preencheMatriz(matrizAdjacencia, linha);
-			numeroLinha++;
+			if(numeroLinha == 0){
+			 	for(j = 0; j < nVertice; j++){
+					for(k = 0; k < nVertice; k++){
+						if(matrizAdjacencia[j][k] < 10){
+							printf("0%d ", matrizAdjacencia[j][k]);
+						} else {
+							printf("%d ", matrizAdjacencia[j][k]);	
+						}
+					}
+					printf("\n");
+				}
+				numeroLinha = nVertice - 1;		
+			} else {
+				numeroLinha--;
+			}
 		}
 		i++;
 	}
 
-
- 	for(j = 0; j < nVertice; j++){
-		for(k = 0; k < nVertice; k++){
-			printf("%d ", matrizAdjacencia[j][k]);
-		}
-		printf("\n");
-	}	
 
 	fclose(entrada);
 }
