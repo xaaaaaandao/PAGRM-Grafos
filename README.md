@@ -21,7 +21,8 @@ $ make compile
 ### Compilar e executar
 
 ```
-$ make all
+$ make
+$ make all 
 ```
 
 ### Executar
