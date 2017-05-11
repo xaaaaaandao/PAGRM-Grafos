@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "arquivos.h"
-#include "lista.h"
-#include "opcao.h"
-#include "telas.h"
+#include "libraries/arquivos.h"
+#include "libraries/lista.h"
+#include "libraries/opcao.h"
+#include "libraries/telas.h"
 
 int main(int argc, char *argv[]){
 
