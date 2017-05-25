@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "ant.h"
 #include "arquivos.h"
 
 
@@ -12,7 +13,7 @@ int preencheMatriz(int **matriz, char *linha){
 			peso[j] = '\0';
 			valorPeso = atoi(peso);
 			matriz[numeroLinha][k] = valorPeso;
-			matriz[k][numeroLinha] = valorPeso;
+			//matriz[k][numeroLinha] = valorPeso;
 			memset(peso, 0, sizeof(peso));
 			j = 0;
 			k++;
@@ -98,16 +99,8 @@ void lendoArquivo(char *name){
 		if(i >= 0){
 			preencheMatriz(matrizAdjacencia, linha);
 			if(numeroLinha == 0){
-			 	for(j = 0; j < nVertice; j++){
-					for(k = 0; k < nVertice; k++){
-						if(matrizAdjacencia[j][k] < 10){
-							printf("0%d ", matrizAdjacencia[j][k]);
-						} else {
-							printf("%d ", matrizAdjacencia[j][k]);	
-						}
-					}
-					printf("\n");
-				}
+				countComponenteConectadas(matrizAdjacencia, nVertice, nRotulo);
+				break;	 	
 				numeroLinha = nVertice - 1;		
 			} else {
 				numeroLinha--;
