@@ -7,7 +7,7 @@
 
 int preencheMatriz(int **matriz, char *linha){
 	char peso[TAMANHO];
-	int i = 0, j = 0, k = 0, valorPeso;
+	int i = 0, j = 0, k = 1, valorPeso;
 	while(linha[i] != '\0'){
 		if(linha[i] == ' '){
 			peso[j] = '\0';
@@ -17,13 +17,13 @@ int preencheMatriz(int **matriz, char *linha){
 			memset(peso, 0, sizeof(peso));
 			j = 0;
 			k++;
+			//printf("%d\n", k);
 		} else {
 			peso[j] = linha[i];
 			j++;
 		}
 		i++;
 	}
-	printf("\n");
 }
 
 int espacoBranco(char *linha){
@@ -75,7 +75,7 @@ void lendoArquivo(char *name){
 
 	while(fgets(linha, sizeof(linha), entrada) != NULL){
 		if(i == 0){
-			nVertice = numeroVertice(linha);
+			nVertice = numeroVertice(linha) + 1;
 			nRotulo = numeroRotulo(linha);
 			break;	
 		}
@@ -94,11 +94,18 @@ void lendoArquivo(char *name){
 
 	numeroLinha = nVertice - 1;
 
+	for(i = 1; i <= numeroLinha; i++)
+		matrizAdjacencia[0][i] = i;
+	
+	for(i = 1; i <= numeroLinha; i++)
+		matrizAdjacencia[i][0] = i;
+	
+
 	i = 0;
 	while(fgets(linha, sizeof(linha), entrada) != NULL){
 		if(i >= 0){
 			preencheMatriz(matrizAdjacencia, linha);
-			if(numeroLinha == 0){
+			if(numeroLinha == 1){
 				countComponenteConectadas(matrizAdjacencia, nVertice, nRotulo);
 				break;	 	
 				numeroLinha = nVertice - 1;		
@@ -108,6 +115,17 @@ void lendoArquivo(char *name){
 		}
 		i++;
 	}
+
+	/*for(i = 0; i < nVertice; i++){
+		for(j = 0; j < nVertice; j++){
+			if(matrizAdjacencia[i][j] < 10){
+				printf("0%d ", matrizAdjacencia[i][j]);
+			} else {
+				printf("%d ", matrizAdjacencia[i][j]);				
+			}
+		}
+		printf("\n");
+	}*/
 
 
 	fclose(entrada);

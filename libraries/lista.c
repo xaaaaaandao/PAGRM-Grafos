@@ -399,7 +399,7 @@ void inicializarListaAdjacente(listaAdjacente *l){
 void inicializarLista(Lista *l){
 	l -> primeiro = NULL;
 	l -> ultimo = NULL;
-	l -> tamanho = 1;
+	l -> tamanho = 0;
 }
 
 /**

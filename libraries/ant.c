@@ -7,13 +7,18 @@ void converterMatrizToLista(Lista *grafo, int **matriz, int nVertice){
 	for(i = 0; i < nVertice; i++)
 		inserirLista(grafo);
 
-	for(i = 0; i < nVertice; i++){
-		for(j = 0; j < nVertice; j++){
+	for(i = 1; i < nVertice; i++){
+		for(j = 1; j < nVertice; j++){
 			if(matriz[i][j] > 0)
 				insereAresta(grafo, i, j, false, matriz[i][j]);
 		}
 	}
 }
+
+void removeRotulo(){
+
+}
+
 
 void countComponenteConectadas(int **matriz, int nVertice, int nRotulo){
 	Lista *grafo = (Lista*) malloc (sizeof(Lista));
@@ -24,8 +29,11 @@ void countComponenteConectadas(int **matriz, int nVertice, int nRotulo){
 	quantidadeComponenteConectadas[0] = 0;
 
 	converterMatrizToLista(grafo, matriz, nVertice);
+	removeVertice(grafo, 0);
 	imprimirLista(grafo);
 	
+
+
 	printf("\n");
 	for(i = 0; i < nVertice; i++){
 		for(j = 0; j < nVertice; j++){
