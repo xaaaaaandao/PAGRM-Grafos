@@ -2,6 +2,7 @@
 #define ANT_H
 
 /* Definindo algumas estruturas */
-void countComponenteConectadas(int**, int, int);
+void componenteConectadas(int**, int, int);
+void executaTeste();
 
 #endif /* ANT_H */

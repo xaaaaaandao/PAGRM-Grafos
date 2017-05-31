@@ -80,6 +80,8 @@ void lendoArquivo(char *name){
 			break;	
 		}
 	}
+	printf("%d\n", nVertice);
+	printf("%d\n", nRotulo);
 
 	int **matrizAdjacencia = (int**) malloc (nVertice * sizeof(int*));
 	for(j = 0; j < nVertice; j++){
@@ -106,8 +108,8 @@ void lendoArquivo(char *name){
 		if(i >= 0){
 			preencheMatriz(matrizAdjacencia, linha);
 			if(numeroLinha == 1){
-				countComponenteConectadas(matrizAdjacencia, nVertice, nRotulo);
-				break;	 	
+				componenteConectadas(matrizAdjacencia, nVertice, nRotulo);
+				//break;	 	
 				numeroLinha = nVertice - 1;		
 			} else {
 				numeroLinha--;
@@ -116,6 +118,7 @@ void lendoArquivo(char *name){
 		i++;
 	}
 
+	//executaTeste();
 	/*for(i = 0; i < nVertice; i++){
 		for(j = 0; j < nVertice; j++){
 			if(matrizAdjacencia[i][j] < 10){
