@@ -88,10 +88,16 @@ void inicializaMatriz(int **matriz, int nVertice){
 
 void lendoArquivo(char *name){
 	char linha[TAMANHO];
-	printf("lendo arquivo: %s\n", name);
 	FILE *entrada = fopen(name, "r");
-	int i = 0, j, k, nVertice, nRotulo;
+	int i = 0, j, k, nVertice, nRotulo, matrizAtual = 1;
 
+	if(entrada == NULL){
+		printf("\033[1m\033[31mnão existe o arquivo %s\033[0m\n", name);
+		exit(1);
+	}
+
+	printf("\033[1m\033[32mlendo arquivo: %s\033[0m\n", name);
+	
 	/* pegar o número de vértices e rótulos */
 	while(fgets(linha, sizeof(linha), entrada) != NULL){
 		if(i == 0){
@@ -127,9 +133,10 @@ void lendoArquivo(char *name){
 	while(fgets(linha, sizeof(linha), entrada) != NULL){
 		if(i >= 0){
 			preencheMatriz(matrizAdjacencia, linha);
-			if(numeroLinha == 1){		
+			if(numeroLinha == 1){
+				printf("\033[1m\033[32mlendo matriz [%d/10]\033[0m\n", matrizAtual);	
 				componenteConectadas(matrizAdjacencia, nVertice, nRotulo);
-				break;
+				matrizAtual++;
 				numeroLinha = nVertice - 1;		
 			} else {
 				numeroLinha--;
