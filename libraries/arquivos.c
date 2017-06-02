@@ -67,12 +67,32 @@ int numeroRotulo(char *linha){
 	return atoi(valorRotulo);
 }
 
+void inicializaMatriz(int **matriz, int nVertice){
+	int i, j;
+	int numeroLinha;
+	for(i = 0; i < nVertice; i++){
+		for (j = 0; j < nVertice; j++){
+			matriz[i][j] = -1;
+		}
+	}
+
+	numeroLinha = nVertice - 1;
+
+	for(i = 1; i <= numeroLinha; i++)
+		matriz[0][i] = i;
+	
+	for(i = 1; i <= numeroLinha; i++)
+		matriz[i][0] = i;
+	
+}
+
 void lendoArquivo(char *name){
 	char linha[TAMANHO];
 	printf("lendo arquivo: %s\n", name);
 	FILE *entrada = fopen(name, "r");
 	int i = 0, j, k, nVertice, nRotulo;
 
+	/* pegar o número de vértices e rótulos */
 	while(fgets(linha, sizeof(linha), entrada) != NULL){
 		if(i == 0){
 			nVertice = numeroVertice(linha) + 1;
@@ -80,17 +100,17 @@ void lendoArquivo(char *name){
 			break;	
 		}
 	}
-	printf("%d\n", nVertice);
-	printf("%d\n", nRotulo);
 
+	/* aloca matriz */
 	int **matrizAdjacencia = (int**) malloc (nVertice * sizeof(int*));
 	for(j = 0; j < nVertice; j++){
 		matrizAdjacencia[j] = (int*) malloc (nVertice * sizeof(int)); //Aloca um Vetor de Inteiros para cada posição do Vetor de Ponteiros.
  	}
 
+ 	/* inicializa matriz */
  	for(j = 0; j < nVertice; j++){
 		for(k = 0; k < nVertice; k++){
-			matrizAdjacencia[j][k] = 0;
+			matrizAdjacencia[j][k] = -1;
 		}
 	}	
 
@@ -102,14 +122,14 @@ void lendoArquivo(char *name){
 	for(i = 1; i <= numeroLinha; i++)
 		matrizAdjacencia[i][0] = i;
 	
-
+	/* pecorre o arquivo e coloca na matriz*/
 	i = 0;
 	while(fgets(linha, sizeof(linha), entrada) != NULL){
 		if(i >= 0){
 			preencheMatriz(matrizAdjacencia, linha);
-			if(numeroLinha == 1){
+			if(numeroLinha == 1){		
 				componenteConectadas(matrizAdjacencia, nVertice, nRotulo);
-				//break;	 	
+				break;
 				numeroLinha = nVertice - 1;		
 			} else {
 				numeroLinha--;
@@ -117,19 +137,6 @@ void lendoArquivo(char *name){
 		}
 		i++;
 	}
-
-	//executaTeste();
-	/*for(i = 0; i < nVertice; i++){
-		for(j = 0; j < nVertice; j++){
-			if(matrizAdjacencia[i][j] < 10){
-				printf("0%d ", matrizAdjacencia[i][j]);
-			} else {
-				printf("%d ", matrizAdjacencia[i][j]);				
-			}
-		}
-		printf("\n");
-	}*/
-
 
 	fclose(entrada);
 }

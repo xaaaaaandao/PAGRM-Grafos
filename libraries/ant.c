@@ -3,14 +3,14 @@
 #include "busca.h"
 #include "lista.h"
 
-void converterMatrizToLista(Lista *grafo, int **matriz, int nVertice){
+void converterMatrizToLista(Lista *grafo, int **matriz, int nVertice, int nRotulo){
 	int i, j;
 	for(i = 0; i < nVertice; i++)
 		inserirLista(grafo);
 
 	for(i = 1; i < nVertice; i++){
 		for(j = 1; j < nVertice; j++){
-			if(matriz[i][j] > 0)
+			if(matriz[i][j] >= 0)
 				insereAresta(grafo, i, j, false, matriz[i][j]);
 		}
 	}
@@ -38,79 +38,43 @@ int countComponenteConectadas(Lista *l) {
 	return contador;
 }
 
-void executaTeste(){
-	int j, k;
-	int **matrizAdjacencia = (int**) malloc (6 * sizeof(int*));
-	for(j = 0; j < 6; j++){
-		matrizAdjacencia[j] = (int*) malloc (6 * sizeof(int)); //Aloca um Vetor de Inteiros para cada posição do Vetor de Ponteiros.
- 	}
-
-	for(j = 0; j < 6; j++){
-		for(k = 0; k < 6; k++){
-			matrizAdjacencia[j][k] = 0;
-		}
-	}
-
-	//matrizAdjacencia[1][3] = 3;
-	matrizAdjacencia[4][1] = 1;
-	matrizAdjacencia[4][2] = 1;
-	matrizAdjacencia[4][5] = 1;
-	//matrizAdjacencia[5][1] = 1;
-	
-	Lista *grafo = (Lista*) malloc (sizeof(Lista));
-	converterMatrizToLista(grafo, matrizAdjacencia, 6);
-	imprimirLista(grafo);
-	removeVertice(grafo, 0);
-	printf("O número de componente conectadas: %d\n", countComponenteConectadas(grafo));
-}
-
-Lista *criaGrafo(int **matriz, int nVertice, int rotulo){
-	Lista *grafo;
-	limpaTodasLista(grafo);
+void verificaMatriz(int **matriz, int nVertice, int nRotulo){
 	int i, j;
-
-	for(i = 0; i < nVertice; i++)
-		inserirLista(grafo);
-
 	for(i = 1; i < nVertice; i++){
 		for(j = 1; j < nVertice; j++){
-			if(matriz[i][j] == rotulo){
-				insereAresta(grafo, i, j, false, rotulo);
+			if(matriz[i][j] == nRotulo){
+				matriz[i][j] = -1;
 			}
 		}
 	}
-
-	return grafo;
 }
 
-
-
-void componenteConectadas(int **matriz, int nVertice, int nRotulo){
-	Lista *grafo = (Lista*) malloc (sizeof(Lista));
+void imprimirMatriz(int **matriz, int nVertice){
 	int i, j;
-	
-	inicializarLista(grafo);
-	converterMatrizToLista(grafo, matriz, nVertice);
-	removeVertice(grafo, 0);
-
-	/*for(i = 0; i <= nRotulo){
-		auxiliar = criaGrafo(i);
-	}*/
-
-	//executaTeste();
-	//printf("O número de componente conectadas: %d\n", countComponenteConectadas(grafo));
-//	imprimirLista(grafo);
-	
-	printf("\n");
 	for(i = 0; i < nVertice; i++){
 		for(j = 0; j < nVertice; j++){
-			if(matriz[i][j] < 10)
+			if(matriz[i][j] >= 0 && matriz[i][j] < 10){
 				printf("0%d ", matriz[i][j]);
-			else
-				printf("%d ", matriz[i][j]);
+			} else {
+				printf("%d ", matriz[i][j]);				
+			}
 		}
 		printf("\n");
 	}
+	printf("\n");
+}
 
-	//usar busca em profundidade
+void componenteConectadas(int **matriz, int nVertice, int nRotulo){
+	Lista *grafo = (Lista*) malloc (sizeof(Lista));
+	
+	inicializarLista(grafo);
+	/* procurar na matriz valores que tem o mesmo valor que o rótulo
+	quando o valor é igual ao do rótulo não existe aresta */
+	verificaMatriz(matriz, nVertice, nRotulo);
+	//imprimirMatriz(matriz, nVertice);
+	/* converte a matriz para a lista */
+	converterMatrizToLista(grafo, matriz, nVertice, nRotulo);
+	removeVertice(grafo, 0);
+	//imprimirLista(grafo);
+
 }

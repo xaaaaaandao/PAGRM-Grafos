@@ -3,6 +3,5 @@
 
 /* Definindo algumas estruturas */
 void componenteConectadas(int**, int, int);
-void executaTeste();
 
 #endif /* ANT_H */
