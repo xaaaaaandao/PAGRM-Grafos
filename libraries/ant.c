@@ -105,10 +105,48 @@ int grafoDeterminadoRotulo(int **matriz, int nVertice, int rotulo){
 	
 }
 
+void inicializaMatrizRotulo(int **matrizRotulo, int nRotulo){
+	int i, j;
+	for(i = 0; i  < nRotulo; i++){
+		for(j = 0; j < nRotulo; j++){
+			matrizRotulo[i][j] = 1;
+		}
+	}
+}
+
+void adicionandolinhaL(int **matrizRotulo, int nRotulo, int linhaL[]){
+	static int posicaoVetor = 0;
+	int i = 0, somatorio = 0;
+	if(posicaoVetor == 0){
+		/* Cê o meu conjunto L' está vazio como fazer? */
+		printf("Cê o meu conjunto L' está vazio como fazer?\n");
+		printf("\n");
+	} else {
+		for(i = 0; i < nRotulo; i++){
+//			somatorio = somatorio + matrizRotulo[linhaL[i]][rotulo];
+		}
+	}
+}
+
 void componenteConectadas(int **matriz, int nVertice, int nRotulo){
 	Lista *grafo = (Lista*) malloc (sizeof(Lista));
 	int i, componenteConectadas[nRotulo];
-	
+	/* Modelo de feromônio */
+	/* Matriz L x L*/
+	int **matrizRotulo = (int**) malloc (nRotulo * sizeof(int*));
+	/* Subconjunto de L o L'*/
+	int linhaL[nRotulo];
+
+	/* Inicializa a matriz de rótulo */
+	for(i = 0; i < nRotulo; i++){
+		matrizRotulo[i] = (int*) malloc (nRotulo * sizeof(int)); //Aloca um Vetor de Inteiros para cada posição do Vetor de Ponteiros.
+ 	}
+	inicializaMatrizRotulo(matrizRotulo, nRotulo);
+
+	/* Usando a fórmula */
+	/* T(L', l) = Somatório(Til) para os números i que pertencem a L' */
+	adicionandolinhaL(matrizRotulo, nRotulo, linhaL);
+
 	inicializarLista(grafo);
 	/* procurar na matriz valores que tem o mesmo valor que o rótulo
 	quando o valor é igual ao do rótulo não existe aresta */
