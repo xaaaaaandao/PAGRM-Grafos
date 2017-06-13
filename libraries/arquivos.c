@@ -1,11 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "ant.h"
+#include "mvca.h"
 #include "arquivos.h"
 
-
-int preencheMatriz(int **matriz, char *linha){
+/**
+* A função preencheMatriz em que recebemos a matriz de adjacência,
+* e a linha do arquivo, em que percorremos a linha e inserimos cada um dos elementos da 
+* linha na matriz de adjacência. 
+@param matriz, é um inteiro que contém a matriz de adjacência.
+@param linha, é um char que é a linha do arquivo.
+@return void, retorna nada.
+*/
+void preencheMatriz(int **matriz, char *linha){
 	char peso[TAMANHO];
 	int i = 0, j = 0, k = 1, valorPeso;
 	while(linha[i] != '\0'){
@@ -26,6 +33,13 @@ int preencheMatriz(int **matriz, char *linha){
 	}
 }
 
+/**
+* A função espacoBranco em que recebemos a linha do arquivo,
+* em que percorremos a linha e identificamos a primieira recorrência do caractere espaço em
+* branco e retornamos essa posição.
+@param linha, é um char que é a linha do arquivo.
+@return i, é um inteiro que retorna a posição do espaço em branco.
+*/
 int espacoBranco(char *linha){
 	int i = 0;
 	while(linha[i] != '\0'){
@@ -37,6 +51,12 @@ int espacoBranco(char *linha){
 	return -1;
 }
 
+/**
+* A função numeroVertice em que recebemos a linha do arquivo,
+* em que percorremos a linha e identificamos o número de vértice.
+@param linha, é um char que é a linha do arquivo.
+@return atoi(valorVertice), é um inteiro que retorna a conversão do valor com a quantidade de vértice.
+*/
 int numeroVertice(char *linha){
 	int i = 0, j = 0;
 	char valorVertice[TAMANHO];
@@ -53,6 +73,12 @@ int numeroVertice(char *linha){
 	return atoi(valorVertice);
 }
 
+/**
+* A função numeroRotulo em que recebemos a linha do arquivo,
+* em que percorremos a linha e identificamos o número de rótulo.
+@param linha, é um char que é a linha do arquivo.
+@return atoi(valorVertice), é um inteiro que retorna a conversão do valor com a quantidade de rótulos.
+*/
 int numeroRotulo(char *linha){
 	int i = 0, j = 0, espaco = espacoBranco(linha);
 	char valorRotulo[TAMANHO];
@@ -67,27 +93,16 @@ int numeroRotulo(char *linha){
 	return atoi(valorRotulo);
 }
 
-void inicializaMatriz(int **matriz, int nVertice){
-	int i, j;
-	int numeroLinha;
-	for(i = 0; i < nVertice; i++){
-		for (j = 0; j < nVertice; j++){
-			matriz[i][j] = -1;
-		}
-	}
-
-	numeroLinha = nVertice - 1;
-
-	for(i = 1; i <= numeroLinha; i++)
-		matriz[0][i] = i;
-	
-	for(i = 1; i <= numeroLinha; i++)
-		matriz[i][0] = i;
-	
-}
-
+/**
+* A função lendoArquivo em que recebemos o nome do arquivo
+* em que abrimos o arquivo, e extraímos os números de vértices, número de rótulos
+* e por fim executamos o MVCA.
+@param name, é um char que é o nome do arquivo.
+@return void, retorna nada.
+*/
 void lendoArquivo(char *name){
 	char linha[TAMANHO];
+	double tempoTotal = 0;
 	FILE *entrada = fopen(name, "r");
 	int i = 0, j, k, nVertice, nRotulo, matrizAtual = 1;
 
@@ -135,7 +150,7 @@ void lendoArquivo(char *name){
 			preencheMatriz(matrizAdjacencia, linha);
 			if(numeroLinha == 1){
 				printf("\033[1m\033[32mlendo matriz [%d/10]\033[0m\n", matrizAtual);	
-				componenteConectadas(matrizAdjacencia, nVertice, nRotulo);
+				tempoTotal = tempoTotal + realizarMVCA(matrizAdjacencia, nVertice, nRotulo);
 				matrizAtual++;
 				numeroLinha = nVertice - 1;		
 			} else {
@@ -146,4 +161,5 @@ void lendoArquivo(char *name){
 	}
 
 	fclose(entrada);
+	printf("tempo total: %.2f\n", tempoTotal/10);
 }

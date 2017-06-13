@@ -9,8 +9,8 @@ all:
 	cd libraries/ && gcc ordenacao.c -c
 	cd libraries/ && gcc exercicios.c -c
 	cd libraries/ && gcc componente.c -c
-	cd libraries/ && gcc ant.c -c
-	gcc main.c -o main libraries/arquivos.o libraries/matriz.o libraries/lista.o libraries/telas.o libraries/opcao.o libraries/busca.o libraries/fila.o libraries/exercicios.o libraries/ordenacao.o libraries/componente.o libraries/ant.o
+	cd libraries/ && gcc mvca.c -c
+	gcc main.c -o main libraries/arquivos.o libraries/matriz.o libraries/lista.o libraries/telas.o libraries/opcao.o libraries/busca.o libraries/fila.o libraries/exercicios.o libraries/ordenacao.o libraries/componente.o libraries/mvca.o
 	./main
 
 compile:
@@ -24,8 +24,8 @@ compile:
 	cd libraries/ && gcc ordenacao.c -c
 	cd libraries/ && gcc exercicios.c -c
 	cd libraries/ && gcc componente.c -c
-	cd libraries/ && gcc ant.c -c
-	gcc main.c -o main libraries/arquivos.o libraries/matriz.o libraries/lista.o libraries/telas.o libraries/opcao.o libraries/busca.o libraries/fila.o libraries/exercicios.o libraries/ordenacao.o libraries/componente.o libraries/ant.o
+	cd libraries/ && gcc mvca.c -c
+	gcc main.c -o main libraries/arquivos.o libraries/matriz.o libraries/lista.o libraries/telas.o libraries/opcao.o libraries/busca.o libraries/fila.o libraries/exercicios.o libraries/ordenacao.o libraries/componente.o libraries/mvca.o
 
 up:
 	git checkout master
