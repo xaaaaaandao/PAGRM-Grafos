@@ -4,6 +4,7 @@
 /* Bibliotecas necessárias */
 #include "busca.h"
 #include "lista.h"
+#include "arquivos.h"
 
 /* Protótipo das funções */
 void converterMatrizToLista(Lista*, int**, int, int);

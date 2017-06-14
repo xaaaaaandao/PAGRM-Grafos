@@ -165,6 +165,39 @@ int grafoDeterminadoRotulo(int **matriz, int nVertice, int rotulo){
 	
 }
 
+int grafoDeterminadoNRotulo(int **matriz, int nVertice, int rotulos[], int nRotulo, int rotuloAtual){
+	/* Criamos um grafo*/
+	Lista *grafo = (Lista*) malloc (sizeof(Lista));
+	int i, j, k;
+
+	/* Inicializamos um grafo */
+	inicializarLista(grafo);
+
+	/* Criamos o vértice */
+	for(i = 0; i < nVertice; i++)
+		inserirLista(grafo);
+
+	removeVertice(grafo, 0);
+
+	/* Inserimos arestas entre esse vértices*/
+	for(i = 1; i < nVertice; i++){
+		for(j = 1; j < nVertice; j++){
+			for(k = 0; k < nRotulo; k++){
+				if(matriz[i][j] == rotulos[k]){
+					insereAresta(grafo, i, j, false, matriz[i][j]);
+				}
+			}
+			if(matriz[i][j] == rotuloAtual){
+				insereAresta(grafo, i, j, false, matriz[i][j]);				
+			}
+		}
+	}
+
+	/* Contamos as componentes conectadas */
+	return countComponenteConectadas(grafo);
+	
+}
+
 /**
 * A função realizarMVCA em que recebemos a matriz de adjacência,
 * número de vértices e número de rótulos. Retiramos da matriz
@@ -179,8 +212,11 @@ int grafoDeterminadoRotulo(int **matriz, int nVertice, int rotulo){
 */
 double realizarMVCA(int **matriz, int nVertice, int nRotulo){
 	clock_t tempo = clock();
-	int i, componenteConectadas[nRotulo], menor;
-
+	int i, j, x, y;
+	int rotulo, rotuloAuxiliar, componenteConectadas[nRotulo];
+	int menor, menorAuxiliar;
+	int rotulosUsados[nRotulo], respostaComponenteConectadas[nRotulo];
+	
 	/* Procurar na matriz valores que tem o mesmo valor que o rótulo
 	quando o valor é igual ao do rótulo não existe aresta */
 	verificaMatriz(matriz, nVertice, nRotulo);
@@ -201,10 +237,80 @@ double realizarMVCA(int **matriz, int nVertice, int nRotulo){
 
 	for(i = 0; i < nRotulo; i++){
 		if(menor == componenteConectadas[i]){
-			printf("O rótulo %d é que o possui o menor número de componentes conectadas.\n", i);
+			rotulo = i;
+			//printf("O rótulo %d é que o possui o menor número de componentes conectadas.\n", i);
 			break;
 		}
-	}	
+	}
+
+	/* Ou seja se eu tenho uma somente um componente conectada */
+	if(menor == 1){
+		printf("O rótulo %d tem %d componentes conectadas\n", rotulo, componenteConectadas[i]);
+	} else {
+		/* Quando eu tenho mais de uma componente conectada */
+		/* Pegamos o que contém menos componentes conectadas e inserimos no vetor */
+		j = 0;
+		rotulosUsados[j] = rotulo;
+				
+		/* Enquanto for diferente de um, nós vamos tentar encontrar*/
+		while(menor != 1){
+			for(i = 0; i < nRotulo; i++){
+				respostaComponenteConectadas[i] = 0;
+			}
+
+			for(i = 0; i < j + 1; i++){
+				respostaComponenteConectadas[rotulosUsados[i]] = 2147483647;
+			}
+			j++;
+
+			for(i = 0; i < nRotulo; i++){
+				if(respostaComponenteConectadas[i] == 0){
+					respostaComponenteConectadas[i] = grafoDeterminadoNRotulo(matriz, nVertice, rotulosUsados, j, i);
+				}
+			}
+
+			if(respostaComponenteConectadas[0] == 2147483647){
+				for(i = 1; i < nRotulo; i++){
+					if(respostaComponenteConectadas[i] < 2147483647){
+						menorAuxiliar = respostaComponenteConectadas[i];
+						break;
+					}
+				}	
+
+				for(i = 0; i < nRotulo; i++){
+					if(respostaComponenteConectadas[i] < 2147483647){
+						if(respostaComponenteConectadas[i] <= menorAuxiliar){
+							menorAuxiliar = respostaComponenteConectadas[i];
+							rotuloAuxiliar = i;
+						}
+					}
+				}
+			} else {
+				menorAuxiliar = respostaComponenteConectadas[0];	
+				for(i = 1; i < nRotulo; i++){
+					if(respostaComponenteConectadas[i] < 2147483647){
+						if(respostaComponenteConectadas[i] <= menorAuxiliar){
+							menorAuxiliar = respostaComponenteConectadas[i];
+							rotuloAuxiliar = i;
+						}
+					}
+				}
+
+			}
+
+			if(menorAuxiliar == 1){
+				rotulosUsados[j++] = rotuloAuxiliar;
+				for(i = 0; i < j; i++)
+					printf("%d ", rotulosUsados[i]);
+				printf("\n");
+				menor = 1;
+			} else {
+				rotulosUsados[j] = rotuloAuxiliar;
+			}
+			//menor = 1;
+		}
+
+	}
 	
 	tempo = clock() - tempo;
 
