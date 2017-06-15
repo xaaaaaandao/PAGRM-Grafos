@@ -164,6 +164,19 @@ int grafoDeterminadoRotulo(int **matriz, int nVertice, int rotulo){
 	
 }
 
+
+/**
+* A função grafoDeterminadoNRotulo em que recebemos a matriz com os valores,
+* nVertice que possui um número de vértices, rotulosUsados que já foram os rótulos que utlizados
+* nRotulos com a quantidade de rótulos e o rotuloAtual em que vamos inserir para verificar com
+* ele quantas componentes conectadas ele possui. 
+@param matriz, é um inteiro que contém a matriz de adjacência.
+@param nVertice, é um inteiro que contém a quantidade total de vértices.
+@param rotulosUsados, é um arranjo de inteiro que conseguimos verificar qual rótulos já fora utilizados.
+@param nRotulo, é um inteiro que contém a quantidade total de rótulos.
+@param rotuloAtual, é um inteiro que contém o rótulo atual que iremos verificar quantas componentes conectadas ele retorna.
+@return countComponenteConectadas(grafo), retorna a quantidade de componentes conectadas desse grafo.
+*/
 int grafoDeterminadoNRotulo(int **matriz, int nVertice, int rotulosUsados[], int nRotulo, int rotuloAtual){
 	/* Criamos um grafo*/
 	Lista *grafo = (Lista*) malloc (sizeof(Lista));
@@ -199,12 +212,28 @@ int grafoDeterminadoNRotulo(int **matriz, int nVertice, int rotulosUsados[], int
 	
 }
 
+/**
+* A função inicializaRotulosUsados em que recebemos a rotulosUsados,
+* nRotulos com a quantidade de rótulos, percorremos o vetor
+* e inserimos um para falar que aquele rótulo já foi utilizado.
+@param rotulosUsados, é um arranjo de inteiro que conseguimos verificar qual rótulos já fora utilizados.
+@param nRotulo, é um inteiro que contém a quantidade total de rótulos.
+@return void, retorna nada.
+*/
 void inicializaRotulosUsados(int rotulosUsados[], int nRotulo){
 	int i;
 	for(i = 0; i < nRotulo; i++)
 		rotulosUsados[i] = 1;
 }
 
+/**
+* A função restaRotulosUsados em que recebemos a rotulosUsados,
+* nRotulos com a quantidade de rótulos, percorremos o vetor
+* e na posição que tiver um signfica que temos um rótulo que não foi utilizado.
+@param rotulosUsados, é um arranjo de inteiro que conseguimos verificar qual rótulos já fora utilizados.
+@param nRotulo, é um inteiro que contém a quantidade total de rótulos.
+@return contador, retorna a quantidade de rótulos não utilizados.
+*/
 int restaRotulosUsados(int rotulosUsados[], int nRotulo){
 	int contador = 0, i;
 	for(i = 0; i < nRotulo; i++){
@@ -219,12 +248,14 @@ int restaRotulosUsados(int rotulosUsados[], int nRotulo){
 * número de vértices e número de rótulos. Retiramos da matriz
 * valores da matrizes que são iguais, ao nmero de rótulo.
 * Após isso criamos o grafo para aquele determinado rótulo, 
-* e depois contamos as componentes conectadas e por fim, imprimimos
-* qual é o rótulo que possui menos componentes conectadas.
+* e depois contamos as componentes conectadas. Caso achasse um rótulo
+* com componentes conectadas que tenha apenas um, caso não ache
+* pegamos o que retornar o menor valor de componente conectadas.
+* Repetimos esse processo até que algum rótulo retorne uma componente conectada.
 @param matriz, é um inteiro que contém a matriz de adjacência.
 @param nVertice, é um inteiro que contém a quantidade total de vértices.
 @param nRotulo, é um inteiro que contém a quantidade total de rótulos.
-@return (tempoGasto * 1000000), retorna o tempo gasto para realizar o MVCA.
+@return j, retorna a quantidade de rótulos utilizados.
 */
 int realizarMVCA(int **matriz, int nVertice, int nRotulo){
 	int i, j, k;
@@ -250,17 +281,18 @@ int realizarMVCA(int **matriz, int nVertice, int nRotulo){
 		}
 	}
 
+	/* Retornamos o primeiro rótulo que possui o menor valor */
 	for(i = 0; i < nRotulo; i++){
 		if(menor == componenteConectadas[i]){
 			rotulo = i;
-			//printf("O rótulo %d é que o possui o menor número de componentes conectadas.\n", i);
 			break;
 		}
 	}
 
 	/* Ou seja se eu tenho uma somente um componente conectada */
 	if(menor == 1){
-		printf("O rótulo %d tem %d componentes conectadas\n", rotulo, componenteConectadas[i]);
+		printf("%d\n", rotulo);
+		return 1;
 	} else {
 		/* Quando eu tenho mais de uma componente conectada */
 		/* Pegamos o que contém menos componentes conectadas e inserimos no vetor */
@@ -275,7 +307,7 @@ int realizarMVCA(int **matriz, int nVertice, int nRotulo){
 			rotulosUsados[rotuloAtual] = 2147483647;
 			novaComponenteConectadas[rotuloAtual] = 2147483647;
 			
-			/* Se tiver somente um valor faltando já adiciono ele*/
+			/* Se tiver somente um valor faltando já adiciono ele */
 			if(restaRotulosUsados(rotulosUsados, nRotulo) == 1){
 				for(i = 0; i < nRotulo; i++){
 					if(rotulosUsados[i] == 1){
@@ -307,11 +339,13 @@ int realizarMVCA(int **matriz, int nVertice, int nRotulo){
 				}
 				//printf("Rótulo %d - CC: %d\n", i, novaComponenteConectadas[i]);
 			}
+			/* Se o menor for o mesmo valor para as componentes conectadas na posição zero o rótulo então é 0 */
 			if(novoMenor == novaComponenteConectadas[0]){
 				rotuloAtual = 0;
 			}
 			resposta[j] = rotuloAtual;
 			j++;
+			quantidadeRestantesRotulo = restaRotulosUsados(rotulosUsados, nRotulo);
 			//printf("rotulo atual: %d\n", rotuloAtual);
 			//printf("menor: %d\n", novoMenor);
 			//printf("----------------\n");

@@ -13,6 +13,9 @@ int countComponenteConectadas(Lista*);
 void verificaMatriz(int**, int, int);
 void imprimirMatriz(int**, int);
 int grafoDeterminadoRotulo(int**, int, int);
+int grafoDeterminadoNRotulo(int**, int, int[], int, int);
+void inicializaRotulosUsados(int[], int);
+int restaRotulosUsados(int[], int);
 int realizarMVCA(int**, int, int);
 
 #endif /* MVCA_H */

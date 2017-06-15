@@ -97,7 +97,7 @@ int numeroRotulo(char *linha){
 /**
 * A função lendoArquivo em que recebemos o nome do arquivo
 * em que abrimos o arquivo, e extraímos os números de vértices, número de rótulos
-* e por fim executamos o MVCA.
+* e por fim executamos o MVCA, imprimimos a média de rótulos e o tempo total.
 @param name, é um char que é o nome do arquivo.
 @return void, retorna nada.
 */
@@ -146,7 +146,7 @@ void lendoArquivo(char *name){
 	for(i = 1; i <= numeroLinha; i++)
 		matrizAdjacencia[i][0] = i;
 	
-	/* pecorre o arquivo e coloca na matriz*/
+	/* pecorre o arquivo e coloca na matriz */
 	i = 0;
 	while(fgets(linha, sizeof(linha), entrada) != NULL){
 		if(i >= 0){
@@ -172,6 +172,6 @@ void lendoArquivo(char *name){
 	printf("\033[1m\033[32m=========================\033[0m\n");	
 	printf("\033[1m\033[32m        RESULTADOS       \033[0m\n");	
 	printf("\033[1m\033[32m=========================\033[0m\n");	
-	printf("\033[1m\033[35mtempo total:\033[0m %.2f\n", tempoGasto/10);
+	printf("\033[1m\033[35mtempo total:\033[0m %.2f\n", tempoGasto);
 	printf("\033[1m\033[35mmedia total:\033[0m %.2f\n", media/10);
 }
