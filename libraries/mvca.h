@@ -13,6 +13,6 @@ int countComponenteConectadas(Lista*);
 void verificaMatriz(int**, int, int);
 void imprimirMatriz(int**, int);
 int grafoDeterminadoRotulo(int**, int, int);
-double realizarMVCA(int**, int, int);
+int realizarMVCA(int**, int, int);
 
 #endif /* MVCA_H */

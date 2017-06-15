@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "mvca.h"
 #include "arquivos.h"
 
@@ -101,6 +102,8 @@ int numeroRotulo(char *linha){
 @return void, retorna nada.
 */
 void lendoArquivo(char *name){
+	double tempoGasto = 0;
+	double media = 0;
 	char linha[TAMANHO];
 	double tempoTotal = 0;
 	FILE *entrada = fopen(name, "r");
@@ -150,7 +153,10 @@ void lendoArquivo(char *name){
 			preencheMatriz(matrizAdjacencia, linha);
 			if(numeroLinha == 1){
 				printf("\033[1m\033[32mlendo matriz [%d/10]\033[0m\n", matrizAtual);	
-				tempoTotal = tempoTotal + realizarMVCA(matrizAdjacencia, nVertice, nRotulo);
+				clock_t tempo = clock();
+				media = media + realizarMVCA(matrizAdjacencia, nVertice, nRotulo);
+				tempo = clock() - tempo;
+				tempoGasto = tempoGasto + (((double)tempo) / CLOCKS_PER_SEC); 
 				matrizAtual++;
 				numeroLinha = nVertice - 1;		
 			} else {
@@ -161,5 +167,11 @@ void lendoArquivo(char *name){
 	}
 
 	fclose(entrada);
-	printf("tempo total: %.2f\n", tempoTotal/10);
+	/* Tempo gasto vem em segundos e vezes 1000 para transformar em milisegundos */
+	tempoGasto = tempoGasto * 1000;
+	printf("\033[1m\033[32m=========================\033[0m\n");	
+	printf("\033[1m\033[32m        RESULTADOS       \033[0m\n");	
+	printf("\033[1m\033[32m=========================\033[0m\n");	
+	printf("\033[1m\033[35mtempo total:\033[0m %.2f\n", tempoGasto/10);
+	printf("\033[1m\033[35mmedia total:\033[0m %.2f\n", media/10);
 }

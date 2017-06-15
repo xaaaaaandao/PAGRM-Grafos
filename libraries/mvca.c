@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "mvca.h"
 
 /**
@@ -227,8 +226,7 @@ int restaRotulosUsados(int rotulosUsados[], int nRotulo){
 @param nRotulo, é um inteiro que contém a quantidade total de rótulos.
 @return (tempoGasto * 1000000), retorna o tempo gasto para realizar o MVCA.
 */
-double realizarMVCA(int **matriz, int nVertice, int nRotulo){
-	clock_t tempo = clock();
+int realizarMVCA(int **matriz, int nVertice, int nRotulo){
 	int i, j, k;
 	int rotulo, menor, componenteConectadas[nRotulo];
 	int rotuloAtual, quantidadeRestantesRotulo, novoMenor;
@@ -323,12 +321,6 @@ double realizarMVCA(int **matriz, int nVertice, int nRotulo){
 		printf("\n");
 
 	}
-	
-	tempo = clock() - tempo;
 
-	/* Retorna o tempo em segundos */
-    double tempoGasto = ((double)tempo) / CLOCKS_PER_SEC; 
- 
-    return (tempoGasto * 1000000);
- 
+	return j;	
 }
