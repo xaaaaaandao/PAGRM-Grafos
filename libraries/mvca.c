@@ -261,7 +261,7 @@ int realizarMVCA(int **matriz, int nVertice, int nRotulo){
 	int i, j, k;
 	int rotulo, menor, componenteConectadas[nRotulo];
 	int rotuloAtual, quantidadeRestantesRotulo, novoMenor;
-	int rotulosUsados[nRotulo], resposta[nRotulo], novaComponenteConectadas[nRotulo];
+	int rotulosUsados[nRotulo], resposta[TAMANHO], novaComponenteConectadas[nRotulo];
 		
 	/* Procurar na matriz valores que tem o mesmo valor que o rótulo
 	quando o valor é igual ao do rótulo não existe aresta */
