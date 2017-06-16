@@ -1,0 +1,7 @@
+Existem duas maneiras de executar
+1 - Para executar utilizando o menu do programa:
+	$ make all
+
+2 - Para executar utilizando o arquivo de entrada:
+	$ make compile
+	$ ./main arquivoentrada.txt
