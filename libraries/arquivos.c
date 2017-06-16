@@ -172,6 +172,6 @@ void lendoArquivo(char *name){
 	printf("\033[1m\033[32m=========================\033[0m\n");	
 	printf("\033[1m\033[32m        RESULTADOS       \033[0m\n");	
 	printf("\033[1m\033[32m=========================\033[0m\n");	
-	printf("\033[1m\033[35mtempo total:\033[0m %.2f\n", tempoGasto);
+	printf("\033[1m\033[35mtempo total:\033[0m %.2f ms\n", tempoGasto);
 	printf("\033[1m\033[35mmedia total:\033[0m %.2f\n", media/10);
 }
