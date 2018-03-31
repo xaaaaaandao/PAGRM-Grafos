@@ -27,9 +27,3 @@ compile:
 	cd libraries/ && gcc mvca.c -c
 	gcc main.c -o main libraries/arquivos.o libraries/matriz.o libraries/lista.o libraries/telas.o libraries/opcao.o libraries/busca.o libraries/fila.o libraries/exercicios.o libraries/ordenacao.o libraries/componente.o libraries/mvca.o
 
-up:
-	git checkout master
-	git pull origin master
-	git merge xandao
-	git push origin master
-	git checkout xandao
